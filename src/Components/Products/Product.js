@@ -6,9 +6,9 @@ import Popup from 'reactjs-popup';
 import Footer from '../Footer/Footer';
 const Product = () => {
   const [cart, addCart] = useState([]);
-  //const [quantity, setquantity] = useState(1);
   const [prices, addPrices] = useState(0);
   const [products, setProducts] = useState([]);
+  const [qty, setQty] = useState(1);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -22,14 +22,22 @@ const Product = () => {
     });
 
     addPrices(prevPrice => {
-      return prevPrice + product.Price;
+      return prevPrice + product.Price * qty;
     });
   }
-
+  const handleQty = count => {
+    setQty(count);
+  };
   return (
     <div className=' container'>
       {products.map((product, index) => (
-        <ProductItem product={product} key={index} id={index} add={addItem} />
+        <ProductItem
+          product={product}
+          key={index}
+          id={index}
+          add={addItem}
+          qty={handleQty}
+        />
       ))}
       <div className={styles.border}>
         <Popup

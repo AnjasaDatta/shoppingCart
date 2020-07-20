@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './Products.module.css';
 import CountUp from 'react-countup';
 
-const ProductItem = ({ product, add }) => {
+const ProductItem = ({ product, add, qty }) => {
   const [item, setItem] = useState([]);
   const [count, setCount] = useState(0);
   const [priceQuantity, setPriceQuantity] = useState(0);
@@ -14,6 +14,7 @@ const ProductItem = ({ product, add }) => {
     setPriceQuantity(prev => {
       return prev + product.Price;
     });
+    qty(count + 1);
   }
 
   function decrease(id) {
@@ -32,8 +33,6 @@ const ProductItem = ({ product, add }) => {
     const no = event.target.value;
     setCount(no);
   }
-  //console.log(priceQuantity);
-  //console.log(item);
   return (
     <div>
       <div>
@@ -62,6 +61,8 @@ const ProductItem = ({ product, add }) => {
           className={styles.add}
           onClick={() => {
             add(product);
+            setCount(1);
+            qty(1);
           }}
         >
           ADD CART
